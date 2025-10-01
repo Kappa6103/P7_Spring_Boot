@@ -1,6 +1,6 @@
 package com.nnk.springboot;
 
-import com.nnk.springboot.domain.Rating;
+import com.nnk.springboot.models.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
 import org.junit.Assert;
 import org.junit.Test;
