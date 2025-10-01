@@ -90,7 +90,7 @@ CREATE TABLE Users (
   username VARCHAR(125),
   password VARCHAR(125),
   fullname VARCHAR(125),
-  role VARCHAR(125),
+  role ENUM('ADMIN', 'USER') NOT NULL,
 
   PRIMARY KEY (Id)
 )
