@@ -1,6 +1,7 @@
 package com.nnk.springboot.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "users")
