@@ -1,8 +1,8 @@
-CREATE SCHEMA IF NOT EXISTS `demo`;
-USE `demo`;
+CREATE SCHEMA IF NOT EXISTS demo;
+USE demo;
 
-CREATE TABLE `bid` (
-  bid_id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE bid_list (
+  bid_list_id INT NOT NULL AUTO_INCREMENT,
   account VARCHAR(30) NOT NULL,
   type VARCHAR(30) NOT NULL,
   bidQuantity DOUBLE,
@@ -25,10 +25,10 @@ CREATE TABLE `bid` (
   sourceListId VARCHAR(125),
   side VARCHAR(125),
 
-  PRIMARY KEY (`bid_id`)
+  PRIMARY KEY (bid_list_id)
 );
 
-CREATE TABLE `trade` (
+CREATE TABLE trade (
   trade_id INT NOT NULL AUTO_INCREMENT,
   account VARCHAR(30) NOT NULL,
   type VARCHAR(30) NOT NULL,
@@ -51,10 +51,10 @@ CREATE TABLE `trade` (
   sourceListId VARCHAR(125),
   side VARCHAR(125),
 
-  PRIMARY KEY (`trade_id`)
+  PRIMARY KEY (trade_id)
 );
 
-CREATE TABLE `curve_point` (
+CREATE TABLE curve_point (
   curve_point_id INT NOT NULL AUTO_INCREMENT,
   CurveId tinyint,
   asOfDate TIMESTAMP,
@@ -65,7 +65,7 @@ CREATE TABLE `curve_point` (
   PRIMARY KEY (curve_point_id)
 );
 
-CREATE TABLE `rating` (
+CREATE TABLE rating (
   rating_id INT NOT NULL AUTO_INCREMENT,
   moodysRating VARCHAR(125),
   sandPRating VARCHAR(125),
@@ -75,7 +75,7 @@ CREATE TABLE `rating` (
   PRIMARY KEY (rating_id)
 );
 
-CREATE TABLE `rulename` (
+CREATE TABLE rulename (
   rulename_id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(125),
   description VARCHAR(125),
@@ -87,7 +87,7 @@ CREATE TABLE `rulename` (
   PRIMARY KEY (rulename_id)
 );
 
-CREATE TABLE `app_user` (
+CREATE TABLE app_user (
   app_user_id INT NOT NULL AUTO_INCREMENT,
   username VARCHAR(125) NOT NULL,
   password VARCHAR(125) NOT NULL,

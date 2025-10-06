@@ -13,7 +13,7 @@ import jakarta.validation.Valid;
 
 @Controller
 public class BidListController {
-    // TODO: Inject Bid service
+    // TODO: Inject BidList service
 
     @RequestMapping("/bidList/list")
     public String home(Model model)
@@ -35,20 +35,20 @@ public class BidListController {
 
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Bid by Id and to model then show to the form
+        // TODO: get BidList by Id and to model then show to the form
         return "bidList/update";
     }
 
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList,
                              BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Bid and return list Bid
+        // TODO: check required fields, if valid call service to update BidList and return list BidList
         return "redirect:/bidList/list";
     }
 
     @GetMapping("/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Bid by Id and delete the bid, return to Bid list
+        // TODO: Find BidList by Id and delete the bid, return to BidList list
         return "redirect:/bidList/list";
     }
 }

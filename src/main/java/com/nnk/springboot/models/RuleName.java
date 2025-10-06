@@ -2,8 +2,12 @@ package com.nnk.springboot.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
 
-
+@Getter
+@Setter
+@Entity
 @Table(name = "rulename")
 public class RuleName {
 

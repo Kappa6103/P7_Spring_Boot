@@ -9,12 +9,13 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Table(name = "bid")
-public class Bid {
+@Entity
+@Table(name = "bid_list")
+public class BidList {
 
     @Id
-    @Column(name = "bid_id")
-    private int bidId;
+    @Column(name = "bid_list_id")
+    private int bidListId;
 
     @NotNull
     @Size(max = FieldConstant.TEXT_FIELD_SMALL)
@@ -75,7 +76,7 @@ public class Bid {
     private String side;
 
     //Constructor for the NotNull values
-    public Bid (String account, String type) {
+    public BidList(String account, String type) {
         this.account = account;
         this.type = type;
     }

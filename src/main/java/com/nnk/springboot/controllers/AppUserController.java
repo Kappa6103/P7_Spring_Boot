@@ -1,7 +1,7 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.models.User;
-import com.nnk.springboot.repositories.UserRepository;
+import com.nnk.springboot.models.AppUser;
+import com.nnk.springboot.repositories.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 
 @Controller
-public class UserController {
+public class AppUserController {
     @Autowired
-    private UserRepository userRepository;
+    private AppUserRepository userRepository;
 
     @RequestMapping("/user/list")
     public String home(Model model)
@@ -27,16 +27,16 @@ public class UserController {
     }
 
     @GetMapping("/user/add")
-    public String addUser(User bid) {
+    public String addUser(AppUser bid) {
         return "user/add";
     }
 
     @PostMapping("/user/validate")
-    public String validate(@Valid User user, BindingResult result, Model model) {
+    public String validate(@Valid AppUser appUser, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            user.setPassword(encoder.encode(user.getPassword()));
-            userRepository.save(user);
+            appUser.setPassword(encoder.encode(appUser.getPassword()));
+            userRepository.save(appUser);
             model.addAttribute("users", userRepository.findAll());
             return "redirect:/user/list";
         }
@@ -45,31 +45,31 @@ public class UserController {
 
     @GetMapping("/user/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        user.setPassword("");
-        model.addAttribute("user", user);
+        AppUser appUser = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        appUser.setPassword("");
+        model.addAttribute("user", appUser);
         return "user/update";
     }
 
     @PostMapping("/user/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid User user,
+    public String updateUser(@PathVariable("id") Integer id, @Valid AppUser appUser,
                              BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "user/update";
         }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setId(id);
-        userRepository.save(user);
+        appUser.setPassword(encoder.encode(appUser.getPassword()));
+        appUser.setAppUserId(id);
+        userRepository.save(appUser);
         model.addAttribute("users", userRepository.findAll());
         return "redirect:/user/list";
     }
 
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id, Model model) {
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        userRepository.delete(user);
+        AppUser appUser = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        userRepository.delete(appUser);
         model.addAttribute("users", userRepository.findAll());
         return "redirect:/user/list";
     }
