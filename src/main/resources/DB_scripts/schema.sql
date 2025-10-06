@@ -1,6 +1,7 @@
-CREATE SCHEMA IF NOT EXISTS demo;
-USE demo;
+CREATE SCHEMA IF NOT EXISTS p7_test;
+USE p7_test;
 
+DROP TABLE IF EXISTS bid_list;
 CREATE TABLE bid_list (
   bid_list_id INT NOT NULL AUTO_INCREMENT,
   account VARCHAR(30) NOT NULL,
@@ -28,6 +29,7 @@ CREATE TABLE bid_list (
   PRIMARY KEY (bid_list_id)
 );
 
+DROP TABLE IF EXISTS trade;
 CREATE TABLE trade (
   trade_id INT NOT NULL AUTO_INCREMENT,
   account VARCHAR(30) NOT NULL,
@@ -54,6 +56,7 @@ CREATE TABLE trade (
   PRIMARY KEY (trade_id)
 );
 
+DROP TABLE IF EXISTS curve_point;
 CREATE TABLE curve_point (
   curve_point_id INT NOT NULL AUTO_INCREMENT,
   CurveId tinyint,
@@ -65,6 +68,7 @@ CREATE TABLE curve_point (
   PRIMARY KEY (curve_point_id)
 );
 
+DROP TABLE IF EXISTS rating;
 CREATE TABLE rating (
   rating_id INT NOT NULL AUTO_INCREMENT,
   moodysRating VARCHAR(125),
@@ -75,6 +79,7 @@ CREATE TABLE rating (
   PRIMARY KEY (rating_id)
 );
 
+DROP TABLE IF EXISTS rulename;
 CREATE TABLE rulename (
   rulename_id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(125),
@@ -87,6 +92,7 @@ CREATE TABLE rulename (
   PRIMARY KEY (rulename_id)
 );
 
+DROP TABLE IF EXISTS app_user;
 CREATE TABLE app_user (
   app_user_id INT NOT NULL AUTO_INCREMENT,
   username VARCHAR(125) NOT NULL,
