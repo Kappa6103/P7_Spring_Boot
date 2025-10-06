@@ -75,8 +75,8 @@ CREATE TABLE `rating` (
   PRIMARY KEY (rating_id)
 );
 
-CREATE TABLE RuleName (
-  Id tinyint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `rulename` (
+  rulename_id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(125),
   description VARCHAR(125),
   json VARCHAR(125),
@@ -84,7 +84,7 @@ CREATE TABLE RuleName (
   sqlStr VARCHAR(125),
   sqlPart VARCHAR(125),
 
-  PRIMARY KEY (Id)
+  PRIMARY KEY (rulename_id)
 );
 
 CREATE TABLE Users (
