@@ -5,7 +5,7 @@ import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
 
-@Entity
+
 @Table(name = "curvepoint")
 public class CurvePoint {
 
