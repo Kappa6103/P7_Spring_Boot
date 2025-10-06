@@ -3,14 +3,12 @@ package com.nnk.springboot.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name = "bid")
 public class Bid {
 
@@ -79,4 +77,10 @@ public class Bid {
 
     @Size(max = 125)
     private String side;
+
+    //Constructor for the NotNull values
+    public Bid (String account, String type) {
+        this.account = account;
+        this.type = type;
+    }
 }

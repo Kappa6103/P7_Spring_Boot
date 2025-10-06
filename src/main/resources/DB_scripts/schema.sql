@@ -28,8 +28,8 @@ CREATE TABLE `bid` (
   PRIMARY KEY (`bid_id`)
 );
 
-CREATE TABLE Trade (
-  TradeId tinyint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `trade` (
+  trade_id INT NOT NULL AUTO_INCREMENT,
   account VARCHAR(30) NOT NULL,
   type VARCHAR(30) NOT NULL,
   buyQuantity DOUBLE,
@@ -51,7 +51,7 @@ CREATE TABLE Trade (
   sourceListId VARCHAR(125),
   side VARCHAR(125),
 
-  PRIMARY KEY (TradeId)
+  PRIMARY KEY (`trade_id`)
 );
 
 CREATE TABLE CurvePoint (
