@@ -18,62 +18,58 @@ public class Trade {
     private int tradeId;
 
     @NotNull
-    @Size(max = 30)
+    @Size(max = FieldConstant.TEXT_FIELD_SMALL)
     private String account;
 
     @NotNull
-    @Size(max = 30)
+    @Size(max = FieldConstant.TEXT_FIELD_SMALL)
     private String type;
 
-    @DecimalMax(value = "1.7976931348623157E308")
     private Double buyQuantity;
 
-    @DecimalMax(value = "1.7976931348623157E308")
     private Double sellQuantity;
 
-    @DecimalMax(value = "1.7976931348623157E308")
     private Double buyPrice;
 
-    @DecimalMax(value = "1.7976931348623157E308")
     private Double sellPrice;
 
     private LocalDateTime tradeDate;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String security;
 
-    @Size(max = 10)
+    @Size(max = FieldConstant.TEXT_FIELD_EXTRA_SMALL)
     private String status;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String trader;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String benchmark;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String book;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String creationName;
 
     private LocalDateTime creationDate;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String revisionName;
 
     private LocalDateTime revisionDate;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String dealName;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String dealType;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String sourceListId;
 
-    @Size
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String side;
 
     //Constructor for the NotNull values
