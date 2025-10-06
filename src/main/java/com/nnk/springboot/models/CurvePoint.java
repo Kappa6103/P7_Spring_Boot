@@ -2,16 +2,32 @@ package com.nnk.springboot.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-
-@Table(name = "curvepoint")
+@Getter
+@Setter
+@Entity
+@Table(name = "curve_point")
 public class CurvePoint {
 
+    @Id
+    @Column(name = "curve_point_id")
+    private int curvePointId;
 
-    LocalDateTime localDateTime;
-    // TODO: Map columns in data table CURVEPOINT with corresponding java fields
+    private Byte CurveId;
+
+    private LocalDateTime asOfDate;
+
+    private Double term;
+
+    @Column(name = "curve_point_value")
+    private Double value;
+
+    private LocalDateTime creationDate;
+
 }
 
 

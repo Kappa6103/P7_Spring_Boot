@@ -54,15 +54,15 @@ CREATE TABLE `trade` (
   PRIMARY KEY (`trade_id`)
 );
 
-CREATE TABLE CurvePoint (
-  Id tinyint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `curve_point` (
+  curve_point_id INT NOT NULL AUTO_INCREMENT,
   CurveId tinyint,
   asOfDate TIMESTAMP,
   term DOUBLE ,
-  valueee DOUBLE ,
+  curve_point_value DOUBLE ,
   creationDate TIMESTAMP ,
 
-  PRIMARY KEY (Id)
+  PRIMARY KEY (curve_point_id)
 );
 
 CREATE TABLE Rating (
