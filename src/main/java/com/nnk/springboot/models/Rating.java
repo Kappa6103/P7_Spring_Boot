@@ -2,9 +2,28 @@ package com.nnk.springboot.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
 
-
+@Getter
+@Setter
+@Entity
 @Table(name = "rating")
 public class Rating {
-    // TODO: Map columns in data table RATING with corresponding java fields
+
+    @Id
+    @Column(name = "rating_id")
+    private int ratingId;
+
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
+    private String moodysRating;
+
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
+    private String sandPRating;
+
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
+    private String fitchRating;
+
+    private Byte orderNumber;
+
 }

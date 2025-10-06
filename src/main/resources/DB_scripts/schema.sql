@@ -65,14 +65,14 @@ CREATE TABLE `curve_point` (
   PRIMARY KEY (curve_point_id)
 );
 
-CREATE TABLE Rating (
-  Id tinyint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `rating` (
+  rating_id INT NOT NULL AUTO_INCREMENT,
   moodysRating VARCHAR(125),
   sandPRating VARCHAR(125),
   fitchRating VARCHAR(125),
   orderNumber tinyint,
 
-  PRIMARY KEY (Id)
+  PRIMARY KEY (rating_id)
 );
 
 CREATE TABLE RuleName (
