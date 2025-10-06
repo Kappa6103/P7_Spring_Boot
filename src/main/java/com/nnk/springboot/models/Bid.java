@@ -17,65 +17,61 @@ public class Bid {
     private int bidId;
 
     @NotNull
-    @Size(max = 30)
+    @Size(max = FieldConstant.TEXT_FIELD_SMALL)
     private String account;
 
     @NotNull
-    @Size(max = 30)
+    @Size(max = FieldConstant.TEXT_FIELD_SMALL)
     private String type;
 
-    @DecimalMax(value = "1.7976931348623157E308")
     private Double bidQuantity;
 
-    @DecimalMax(value = "1.7976931348623157E308")
     private Double askQuantity;
 
-    @DecimalMax(value = "1.7976931348623157E308")
     private Double bid;
 
-    @DecimalMax(value = "1.7976931348623157E308")
     private Double ask;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String benchmark;
 
     private LocalDateTime bidListDate;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String commentary;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String security;
 
-    @Size(max = 10)
+    @Size(max = FieldConstant.TEXT_FIELD_EXTRA_SMALL)
     private String status;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String trader;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String book;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String creationName;
 
     private LocalDateTime creationDate;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String revisionName;
 
     private LocalDateTime revisionDate;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String dealName;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String dealType;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String sourceListId;
 
-    @Size(max = 125)
+    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String side;
 
     //Constructor for the NotNull values
