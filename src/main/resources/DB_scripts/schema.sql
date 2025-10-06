@@ -87,12 +87,12 @@ CREATE TABLE `rulename` (
   PRIMARY KEY (rulename_id)
 );
 
-CREATE TABLE Users (
-  Id tinyint NOT NULL AUTO_INCREMENT,
-  username VARCHAR(125),
-  password VARCHAR(125),
-  fullname VARCHAR(125),
+CREATE TABLE `app_user` (
+  app_user_id INT NOT NULL AUTO_INCREMENT,
+  username VARCHAR(125) NOT NULL,
+  password VARCHAR(125) NOT NULL,
+  fullname VARCHAR(125) NOT NULL,
   role ENUM('ADMIN', 'USER') NOT NULL,
 
-  PRIMARY KEY (Id)
+  PRIMARY KEY (app_user_id)
 );
