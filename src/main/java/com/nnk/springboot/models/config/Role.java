@@ -1,4 +1,4 @@
-package com.nnk.springboot.models;
+package com.nnk.springboot.models.config;
 
 public enum Role {
     USER,

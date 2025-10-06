@@ -1,5 +1,6 @@
 package com.nnk.springboot.models;
 
+import com.nnk.springboot.models.config.FieldConstant;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;

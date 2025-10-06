@@ -1,4 +1,4 @@
-package com.nnk.springboot.models;
+package com.nnk.springboot.models.config;
 
 public class FieldConstant {
     final public static int TEXT_FIELD_EXTRA_SMALL = 10;
