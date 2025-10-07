@@ -1,6 +1,7 @@
 package com.nnk.springboot.integration.controllers;
 
 import com.nnk.springboot.configuration.SpringSecurityConfig;
+import com.nnk.springboot.constant.Const;
 import com.nnk.springboot.controllers.UserController;
 import com.nnk.springboot.models.User;
 import com.nnk.springboot.repositories.UserRepository;
@@ -24,8 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -68,6 +68,10 @@ public class UserControllerIT {
         assertEquals("USER", user.getRole().toString());
 
         assertEquals(sizeOfList + 1, userList.size());
+
+        assertNotNull(user.getPassword());
+        assertEquals(Const.PWD_HASHED_SIZE, user.getPassword().length());
+        assertFalse("password123".equals(user.getPassword()));
     }
 
     @Test

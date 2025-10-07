@@ -25,4 +25,6 @@ public class Const {
     final public static Byte CURVE_ID_UPDATED = 20;
     final public static Double TERM = 10d;
     final public static Double VALUE = 30d;
+
+    final public static int PWD_HASHED_SIZE = 60;
 }

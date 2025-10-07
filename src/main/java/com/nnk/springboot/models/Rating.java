@@ -26,7 +26,6 @@ public class Rating {
     private String sandPRating;
 
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
-    @Column(name = "fitchRating")
     private String fitchRating;
 
     private Byte orderNumber;
