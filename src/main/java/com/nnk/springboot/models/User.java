@@ -11,11 +11,11 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "app_user")
-public class AppUser {
+public class User {
 
     @Id
     @Column(name = "app_user_id")
-    private Integer appUserId;
+    private int id;
 
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     @NotBlank(message = "Username is mandatory")
@@ -29,6 +29,9 @@ public class AppUser {
     @NotBlank(message = "FullName is mandatory")
     private String fullname;
 
-    @NotBlank(message = "Role is mandatory")
+    @NotNull(message = "Role is mandatory")
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('ADMIN', 'USER')")
     private Role role;
+
 }
