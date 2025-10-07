@@ -3,18 +3,22 @@ package com.nnk.springboot.models;
 import com.nnk.springboot.models.config.FieldConstant;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "rulename")
 public class RuleName {
 
     @Id
     @Column(name = "rulename_id")
-    private int rulenameId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String name;

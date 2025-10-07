@@ -5,16 +5,19 @@ import com.nnk.springboot.models.config.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "app_user")
 public class User {
 
     @Id
     @Column(name = "app_user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)

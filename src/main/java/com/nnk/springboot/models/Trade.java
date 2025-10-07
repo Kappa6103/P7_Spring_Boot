@@ -4,19 +4,22 @@ import com.nnk.springboot.models.config.FieldConstant;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "trade")
 public class Trade {
 
     @Id
     @Column(name = "trade_id")
-    private int tradeId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @NotNull
     @Size(max = FieldConstant.TEXT_FIELD_SMALL)

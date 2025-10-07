@@ -4,19 +4,22 @@ import com.nnk.springboot.models.config.FieldConstant;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "bid_list")
 public class BidList {
 
     @Id
     @Column(name = "bid_list_id")
-    private int bidListId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @NotNull
     @Size(max = FieldConstant.TEXT_FIELD_SMALL)

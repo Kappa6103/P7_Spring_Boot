@@ -4,17 +4,20 @@ import com.nnk.springboot.models.config.FieldConstant;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "rating")
 public class Rating {
 
     @Id
     @Column(name = "rating_id")
-    private int ratingId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String moodysRating;
@@ -23,6 +26,7 @@ public class Rating {
     private String sandPRating;
 
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
+    @Column(name = "fitchRating")
     private String fitchRating;
 
     private Byte orderNumber;
