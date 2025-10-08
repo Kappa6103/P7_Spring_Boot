@@ -22,7 +22,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> fetchAllUsers() {
+    public List<User> fetchAll() {
         try {
             return userRepository.findAll();
         } catch (DataAccessException dataAccessException) {

@@ -23,7 +23,7 @@ public class SpringSecurityConfig {
             .csrf(csrf -> csrf.disable())  // Disable CSRF protection
             .headers(headers -> headers.frameOptions().disable())  // Disable X-Frame-Options for H2 console
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll()  // Allow all requests without authentication
+                .anyRequest().permitAll()// Allow all requests without authentication
             );
         
         return http.build();

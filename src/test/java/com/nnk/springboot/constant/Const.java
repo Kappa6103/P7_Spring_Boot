@@ -27,4 +27,12 @@ public class Const {
     final public static Double VALUE = 30d;
 
     final public static int PWD_HASHED_SIZE = 60;
+
+    final public static String USERNAME = "TestUsername";
+    final public static String USERNAME_UPDATED = "TestUsernameUpdated";
+    final public static String PWD = "TestPwd";
+    final public static String FULLNAME = "Test Fullname";
+    final public static String ROLE_USER = "USER";
+    final public static String ROLE_ADMIN = "ADMIN";
+    final public static String EMPTY_FIELD = "";
 }

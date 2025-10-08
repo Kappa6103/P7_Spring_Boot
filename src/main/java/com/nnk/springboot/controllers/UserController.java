@@ -18,10 +18,11 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping("/user/list")
-    public String home(Model model) {
+    //TODO : wrong http verbs throughout the class, but constrained because of the view
 
-        model.addAttribute("users", userService.fetchAllUsers());
+    @RequestMapping("/user/list") //TODO : change to getMapping no ?
+    public String home(Model model) {
+        model.addAttribute("users", userService.fetchAll());
         return "user/list";
     }
 
@@ -51,7 +52,7 @@ public class UserController {
             model.addAttribute("user", user);
             return "user/update";
         } else {
-            throw new IllegalArgumentException("Invalid user Id:" + id);
+            throw new IllegalArgumentException("Invalid user Id: " + id);
         }
     }
 
@@ -62,7 +63,7 @@ public class UserController {
             return "user/update";
         }
         userService.updateAndSave(user);
-        model.addAttribute("users", userService.fetchAllUsers());
+        model.addAttribute("users", userService.fetchAll());
         return "redirect:/user/list";
     }
 
@@ -71,10 +72,12 @@ public class UserController {
         if (userService.existsById(id)) {
             userService.deleteById(id);
         } else {
-            throw new IllegalArgumentException("Invalid user Id:" + id);
+            throw new IllegalArgumentException("Invalid user Id: " + id);
         }
-        model.addAttribute("users", userService.fetchAllUsers());
+        model.addAttribute("users", userService.fetchAll());
         return "redirect:/user/list";
     }
+
+
 
 }
