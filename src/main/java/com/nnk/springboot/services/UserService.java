@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class UserService {
+public class UserService implements ServiceCRUDAble<User> {
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -22,6 +22,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Override
     public List<User> fetchAll() {
         try {
             return userRepository.findAll();
@@ -31,6 +32,7 @@ public class UserService {
         }
     }
 
+    @Override
     public void createAndSave(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
@@ -40,6 +42,7 @@ public class UserService {
         }
     }
 
+    @Override
     public Optional<User> fetchById(Integer id) {
         Optional<User> optUser = Optional.empty();
         try {
@@ -50,6 +53,7 @@ public class UserService {
         return optUser;
     }
 
+    @Override
     public void updateAndSave(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
@@ -59,10 +63,12 @@ public class UserService {
         }
     }
 
+    @Override
     public boolean existsById(Integer id) {
         return userRepository.existsById(id);
     }
 
+    @Override
     public void deleteById(Integer id) {
         try {
             userRepository.deleteById(id);
