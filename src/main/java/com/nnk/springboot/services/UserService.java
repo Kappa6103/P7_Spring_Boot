@@ -2,6 +2,7 @@ package com.nnk.springboot.services;
 
 import com.nnk.springboot.models.User;
 import com.nnk.springboot.repositories.UserRepository;
+import com.nnk.springboot.services.interfaces.ServiceCRUDAble;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
