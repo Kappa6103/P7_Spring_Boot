@@ -18,9 +18,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    //TODO : wrong http verbs throughout the class, but constrained because of the view
+    //TODO : wrong http verbs throughout the class, but constrained by the view
 
-    @RequestMapping("/user/list") //TODO : change to getMapping no ?
+    @RequestMapping("/user/list")
     public String home(Model model) {
         model.addAttribute("users", userService.fetchAll());
         return "user/list";

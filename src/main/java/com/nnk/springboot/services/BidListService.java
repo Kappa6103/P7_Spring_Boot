@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @Service
 public class BidListService implements ServiceCRUDAble<BidList> {
+
     @Override
     public List<BidList> fetchAll() {
         return List.of();
