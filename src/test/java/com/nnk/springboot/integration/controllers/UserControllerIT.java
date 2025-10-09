@@ -227,7 +227,7 @@ public class UserControllerIT {
         populateDBWithUsers(10);
         int nonExistentId = -1;
 
-        Exception exception = assertThrows(ServletException.class,() -> {
+        Exception exception = assertThrows(ServletException.class,() -> { //TODO:  A Revoir
             mockMvc.perform(get("/user/delete/" + nonExistentId));
         });
 
