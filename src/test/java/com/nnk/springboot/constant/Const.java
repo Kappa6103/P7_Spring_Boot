@@ -1,5 +1,7 @@
 package com.nnk.springboot.constant;
 
+import java.time.LocalDateTime;
+
 public class Const {
     final public static String ACCOUNT = "Account Test";
     final public static String ACCOUNT_UPDATED = "Account Test Updated";
@@ -35,4 +37,23 @@ public class Const {
     final public static String ROLE_USER = "USER";
     final public static String ROLE_ADMIN = "ADMIN";
     final public static String EMPTY_FIELD = "";
+
+    final public static Double ASKQUANTITY = 11d;
+    final public static Double BID = 12d;
+    final public static Double ASK = 13d;
+    final public static String BENCHMARK = "Benchmark Test";
+    final public static LocalDateTime BIDLISTDATE = LocalDateTime.of(2025, 10, 9, 15, 25);
+    final public static String COMMENTARY = "Commentary Test";
+    final public static String SECURITY = "Security Test";
+    final public static String STATUS = "Status";
+    final public static String TRADER = "Trader Test";
+    final public static String BOOK = "Book Test";
+    final public static String CREATION_NAME = "Creation Name Test";
+    final public static LocalDateTime CREATION_DATE = LocalDateTime.of(2025, 10, 10, 15, 25);
+    final public static String REVISION_NAME = "Revision name Test";
+    final public static LocalDateTime REVISION_DATE = LocalDateTime.of(2025, 10, 11, 15, 25);
+    final public static String DEAL_NAME = "Deal Name Test";
+    final public static String DEAL_TYPE = "Deal Type Test";
+    final public static String SOURCELIST_ID = "Source List Id";
+    final public static String SIDE = "Side Test";
 }

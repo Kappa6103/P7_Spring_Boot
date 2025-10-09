@@ -21,11 +21,11 @@ public class BidList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotNull
+    @NotBlank
     @Size(max = FieldConstant.TEXT_FIELD_SMALL)
     private String account;
 
-    @NotNull
+    @NotBlank
     @Size(max = FieldConstant.TEXT_FIELD_SMALL)
     private String type;
 

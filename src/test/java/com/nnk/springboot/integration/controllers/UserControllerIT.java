@@ -98,6 +98,7 @@ public class UserControllerIT {
         assertEquals(sizeOfList + 1, userList.size());
 
         assertNotNull(user.getPassword());
+        assertNotNull(user.getId());
         assertEquals(Const.PWD_HASHED_SIZE, user.getPassword().length());
         assertFalse("password123".equals(user.getPassword()));
     }
@@ -195,7 +196,7 @@ public class UserControllerIT {
         populateDBWithOneUser();
         int userId = getFirstValidId();
 
-        mockMvc.perform(post("/user/update/1")
+        mockMvc.perform(post("/user/update/" + userId)
                         .param("username", Const.EMPTY_FIELD)
                         .param("password", Const.PWD)
                         .param("fullname", Const.FULLNAME)
