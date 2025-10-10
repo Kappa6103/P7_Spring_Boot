@@ -49,7 +49,7 @@ public class UserService implements ServiceCRUDAble<User> {
         try {
              optUser = userRepository.findById(id);
         } catch (DataAccessException dataAccessException) {
-            log.error("couln't fetch the user with its id : {}", id);
+            log.error("couldn't fetch the user with its id : {}", id);
         }
         return optUser;
     }
