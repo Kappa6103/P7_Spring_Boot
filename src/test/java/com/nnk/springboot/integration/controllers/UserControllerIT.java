@@ -99,7 +99,7 @@ public class UserControllerIT {
         assertNotNull(user.getPassword());
         assertNotNull(user.getId());
         assertEquals(Const.PWD_HASHED_SIZE, user.getPassword().length());
-        assertFalse("password123".equals(user.getPassword()));
+        assertFalse("password123".equals(user.getPassword())); //TODO : SHOULD BE THE CONST.PWD
     }
 
     @Test
