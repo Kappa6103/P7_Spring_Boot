@@ -87,7 +87,6 @@ public class UserControllerIT {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/user/list"));
 
-        // Verify user was created in database
         List<User> userList = userRepository.findAll();
         User user = userList.getFirst();
 

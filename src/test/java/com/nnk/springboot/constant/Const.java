@@ -26,6 +26,7 @@ public class Const {
     final public static Byte CURVE_ID = 10;
     final public static Byte CURVE_ID_UPDATED = 20;
     final public static Double TERM = 10d;
+    final public static Double TERM_UPDATED = 323d;
     final public static Double VALUE = 30d;
 
     final public static int PWD_HASHED_SIZE = 60;
@@ -56,4 +57,7 @@ public class Const {
     final public static String DEAL_TYPE = "Deal Type Test";
     final public static String SOURCELIST_ID = "Source List Id";
     final public static String SIDE = "Side Test";
+
+    final public static LocalDateTime AS_OF_DATE = LocalDateTime.of(2025, 10, 6, 15, 25);
+
 }

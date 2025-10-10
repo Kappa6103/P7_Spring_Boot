@@ -1,6 +1,7 @@
 package com.nnk.springboot.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,8 +24,10 @@ public class CurvePoint {
 
     private LocalDateTime asOfDate;
 
+    @NotNull
     private Double term;
 
+    @NotNull
     @Column(name = "curve_point_value")
     private Double value;
 
