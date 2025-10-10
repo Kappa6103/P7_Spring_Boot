@@ -19,15 +19,19 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String moodysRating;
 
+    @NotBlank
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String sandPRating;
 
+    @NotBlank
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String fitchRating;
 
+    @NotNull
     private Byte orderNumber;
 
 }
