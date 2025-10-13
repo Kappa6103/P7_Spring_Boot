@@ -19,21 +19,27 @@ public class RuleName {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String name;
 
+    @NotBlank
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String description;
 
+    @NotBlank
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String json;
 
+    @NotBlank
     @Size(max = FieldConstant.TEXT_FIELD_BIG)
     private String template;
 
+    @NotBlank
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String sqlStr;
 
+    @NotBlank
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
     private String sqlPart;
 
