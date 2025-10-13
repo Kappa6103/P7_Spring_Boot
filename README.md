@@ -28,3 +28,4 @@
 
 //TODO 
 - final fields for @NotNull attributes ?
+
