@@ -19,13 +19,13 @@ import java.util.Optional;
 public class RatingController {
 
     @Autowired
-    RatingService ratingService;
+    RatingService service;
 
     //TODO : wrong http verbs throughout the class, but constrained by the view
 
     @RequestMapping("/rating/list")
     public String home(Model model) {
-        model.addAttribute("ratings", ratingService.fetchAll());
+        model.addAttribute("ratings", service.fetchAll());
         return "rating/list";
     }
 
@@ -38,7 +38,7 @@ public class RatingController {
     @PostMapping("/rating/validate")
     public String validate(@Valid Rating rating, BindingResult result, Model model) {
         if (!result.hasErrors()) {
-            ratingService.createAndSave(rating);
+            service.createAndSave(rating);
             return "redirect:/rating/list";
         }
         model.addAttribute("rating", rating);
@@ -47,7 +47,7 @@ public class RatingController {
 
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        Optional<Rating> optRating = ratingService.fetchById(id);
+        Optional<Rating> optRating = service.fetchById(id);
         Rating rating;
         if (optRating.isPresent()) {
             rating = optRating.get();
@@ -64,19 +64,19 @@ public class RatingController {
         if (result.hasErrors()) {
             return "rating/update";
         }
-        ratingService.updateAndSave(rating);
-        model.addAttribute("ratings", ratingService.fetchAll());
+        service.updateAndSave(rating);
+        model.addAttribute("ratings", service.fetchAll());
         return "redirect:/rating/list";
     }
 
     @GetMapping("/rating/delete/{id}")
     public String deleteRating(@PathVariable("id") Integer id, Model model) {
-        if (ratingService.existsById(id)) {
-            ratingService.deleteById(id);
+        if (service.existsById(id)) {
+            service.deleteById(id);
         } else {
             throw new IllegalArgumentException("Invalid rating Id: " + id);
         }
-        model.addAttribute("ratings", ratingService.fetchAll());
+        model.addAttribute("ratings", service.fetchAll());
         return "redirect:/rating/list";
     }
 }
