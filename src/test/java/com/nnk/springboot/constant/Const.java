@@ -60,4 +60,6 @@ public class Const {
 
     final public static LocalDateTime AS_OF_DATE = LocalDateTime.of(2025, 10, 6, 15, 25);
 
+    final public static Double BUY_QUANTITY = 123d;
+
 }

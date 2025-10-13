@@ -29,13 +29,14 @@ public class TradeRepositoryIT {
 
 	@Test
 	public void tradeTest() {
-		Trade trade = new Trade(Const.ACCOUNT, Const.TYPE);
+		Trade trade = new Trade(Const.ACCOUNT, Const.TYPE, Const.BUY_QUANTITY);
 
 		// Save
 		trade = tradeRepository.save(trade);
 		assertNotNull(trade.getId());
 		assertEquals(Const.ACCOUNT, trade.getAccount());
 		assertEquals(Const.TYPE, trade.getType());
+		assertEquals(Const.BUY_QUANTITY, trade.getBuyQuantity());
 
 		// Update
 		trade.setAccount(Const.ACCOUNT_UPDATED);

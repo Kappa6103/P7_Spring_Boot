@@ -78,8 +78,9 @@ public class Trade {
     private String side;
 
     //Constructor for the NotNull values
-    public Trade (String account, String type) {
+    public Trade (String account, String type, Double buyQuantity) {
         this.account = account;
         this.type = type;
+        this.buyQuantity = buyQuantity;
     }
 }
