@@ -29,6 +29,7 @@ public class Trade {
     @Size(max = FieldConstant.TEXT_FIELD_SMALL)
     private String type;
 
+    @NotNull
     private Double buyQuantity;
 
     private Double sellQuantity;
