@@ -3,20 +3,22 @@
 <head>
     <title>Please Log In</title>
 </head>
-<body>
-<h1>Please Log In</h1>
-<div th:if="${param.error}">
+<body style="margin-left: 15vh">
+<h1>Login with Username and Password</h1>
+<div th:if="${param.error}" style="margin-bottom: 8px; color: red">
     Invalid username and password.</div>
-<div th:if="${param.logout}">
+<div th:if="${param.logout}" style="margin-bottom: 8px; color: red">
     You have been logged out.</div>
 <form th:action="@{/login}" method="post">
     <div>
-        <input type="text" name="username" placeholder="Username"/>
+        <label>User:____</label>
+        <input type="text" name="username" placeholder="Username" style="margin-bottom: 3px"/>
     </div>
     <div>
+        <label>Password:</label>
         <input type="password" name="password" placeholder="Password"/>
     </div>
-    <input type="submit" value="Log in" />
+    <input type="submit" value="Login" />
 </form>
 </body>
 </html>
