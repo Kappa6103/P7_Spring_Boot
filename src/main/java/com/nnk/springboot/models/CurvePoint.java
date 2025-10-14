@@ -30,6 +30,7 @@ public class CurvePoint {
     private Double term;
 
     @NotNull
+    @Positive
     @Column(name = "curve_point_value")
     private Double value;
 

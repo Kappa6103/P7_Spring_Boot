@@ -30,6 +30,7 @@ public class Trade {
     private String type;
 
     @NotNull
+    @Positive
     private Double buyQuantity;
 
     private Double sellQuantity;
