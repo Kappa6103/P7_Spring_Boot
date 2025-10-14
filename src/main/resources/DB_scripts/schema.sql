@@ -74,7 +74,7 @@ CREATE TABLE rating (
   moodysRating VARCHAR(125),
   sandPRating VARCHAR(125),
   fitchRating VARCHAR(125),
-  orderNumber tinyint,
+  orderNumber INT,
 
   PRIMARY KEY (rating_id)
 );

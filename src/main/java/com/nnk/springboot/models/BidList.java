@@ -29,6 +29,8 @@ public class BidList {
     @Size(max = FieldConstant.TEXT_FIELD_SMALL)
     private String type;
 
+    @NotNull
+    @Positive
     private Double bidQuantity;
 
     private Double askQuantity;

@@ -32,6 +32,7 @@ public class Rating {
     private String fitchRating;
 
     @NotNull
-    private Byte orderNumber;
+    @Positive
+    private int orderNumber;
 
 }
