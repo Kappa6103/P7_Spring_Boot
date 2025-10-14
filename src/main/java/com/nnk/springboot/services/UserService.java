@@ -5,7 +5,11 @@ import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.services.interfaces.ServiceCRUDAble;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class UserService implements ServiceCRUDAble<User> {
+public class UserService implements ServiceCRUDAble<User>, UserDetailsService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -75,6 +79,29 @@ public class UserService implements ServiceCRUDAble<User> {
             userRepository.deleteById(id);
         } catch (DataAccessException dataAccessException) {
             log.error("couldn't delete the user with its id: {}", id);
+        }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        if (username == null || username.isBlank()) {
+            throw new UsernameNotFoundException("Username cannot be empty");
+        }
+        Optional<User> optionalUser = Optional.empty();
+        try {
+            optionalUser = userRepository.findByUsername(username);
+        } catch (DataAccessException e) {
+            log.error("couldn't fetch user {} for authentication", username);
+        }
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            return org.springframework.security.core.userdetails.User.builder()
+                    .username(user.getUsername())
+                    .password(user.getPassword())
+                    .roles(user.getRole().toString())
+                    .build();
+        } else {
+            throw new UsernameNotFoundException("User not found");
         }
     }
 }
