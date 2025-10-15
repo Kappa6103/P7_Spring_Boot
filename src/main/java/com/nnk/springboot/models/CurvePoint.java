@@ -21,7 +21,9 @@ public class CurvePoint {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private Byte CurveId;
+    @NotNull
+    @Positive
+    private int curveId;
 
     private LocalDateTime asOfDate;
 
