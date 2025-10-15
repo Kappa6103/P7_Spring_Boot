@@ -24,8 +24,9 @@ public class User {
     @NotBlank(message = "Username is mandatory")
     private String username;
 
-    @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
+    @Size(min = 8, max = FieldConstant.TEXT_FIELD_MEDIUM)
     @NotBlank(message = "Password is mandatory")
+    @Pattern(regexp = "^(?=.*\\d)(?=.*\\W).*$", message = "Password must contain at least one number and one special character")
     private String password;
 
     @Size(max = FieldConstant.TEXT_FIELD_MEDIUM)
