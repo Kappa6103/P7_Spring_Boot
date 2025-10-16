@@ -1,6 +1,8 @@
 package com.nnk.springboot.constant;
 
+import com.nnk.springboot.models.*;
 import com.nnk.springboot.models.config.Role;
+import org.springframework.dao.DataRetrievalFailureException;
 
 import java.time.LocalDateTime;
 
@@ -68,4 +70,10 @@ public class Const {
     final public static String AUTH_PWD = "AUTH_PWD";
     final public static String AUTH_ROLE_USER = Role.USER.toString();
 
+    final public static BidList BIDLIST = new BidList(ACCOUNT, TYPE);
+    final public static DataRetrievalFailureException DATA_ACCESS_EXCEPTION = new DataRetrievalFailureException("DB Access Failure");
+    final public static CurvePoint CURVEPOINT = new CurvePoint();
+    final public static Rating RATING = new Rating();
+    final public static RuleName RULENAME = new RuleName();
+    final public static Trade TRADE = new Trade();
 }

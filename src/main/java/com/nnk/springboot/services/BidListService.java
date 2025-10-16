@@ -17,12 +17,12 @@ import java.util.Optional;
 public class BidListService implements ServiceCRUDAble<BidList> {
 
     @Autowired
-    private BidListRepository bidListRepository;
+    private BidListRepository repository;
 
     @Override
     public List<BidList> fetchAll() {
         try {
-            return bidListRepository.findAll();
+            return repository.findAll();
         } catch (DataAccessException dataAccessException) {
             log.error("couldn't read the DB");
             return Collections.emptyList();
@@ -32,7 +32,7 @@ public class BidListService implements ServiceCRUDAble<BidList> {
     @Override
     public void createAndSave(BidList bidList) {
         try {
-            bidListRepository.save(bidList);
+            repository.save(bidList);
         } catch (DataAccessException dataAccessException) {
             log.error("couldn't create the bidlist {}", bidList.getAccount());
         }
@@ -42,7 +42,7 @@ public class BidListService implements ServiceCRUDAble<BidList> {
     public Optional<BidList> fetchById(Integer id) {
         Optional<BidList> optBidList = Optional.empty();
         try {
-            optBidList = bidListRepository.findById(id);
+            optBidList = repository.findById(id);
         } catch (DataAccessException dataAccessException) {
             log.error("couldn't fetch the bidlist with the id : {}",id);
         }
@@ -52,22 +52,21 @@ public class BidListService implements ServiceCRUDAble<BidList> {
     @Override
     public void updateAndSave(BidList bidList) {
         try {
-            bidListRepository.save(bidList);
+            repository.save(bidList);
         } catch (DataAccessException dataAccessException) {
             log.error("couldn't update the bidList {}", bidList.getAccount());
         }
-
     }
 
     @Override
     public boolean existsById(Integer id) {
-        return bidListRepository.existsById(id);
+        return repository.existsById(id);
     }
 
     @Override
     public void deleteById(Integer id) {
         try {
-            bidListRepository.deleteById(id);
+            repository.deleteById(id);
         } catch (DataAccessException dataAccessException) {
             log.error("couldn't delete the user with its id: {}", id);
         }
