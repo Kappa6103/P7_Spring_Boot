@@ -75,6 +75,55 @@ public class RuleNameControllerIT {
         }
     }
 
+    /*
+     * TESTS BELOW FOR NOT LOGGED-IN USERS
+     * SPRING SECURITY SHOULD REDIRECT TO HOME PAGE FOR LOGIN
+     */
+
+    @Test
+    void home() throws Exception {
+        mockMvc.perform(get("/ruleName/list"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/home"));
+    }
+
+    @Test
+    void addRuleNameForm() throws Exception {
+        mockMvc.perform(get("/ruleName/add"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/home"));
+    }
+
+    @Test
+    void validate() throws Exception {
+        mockMvc.perform(post("/ruleName/validate"))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void showUpdateForm() throws Exception {
+        mockMvc.perform(get("/ruleName/update/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/home"));
+    }
+
+    @Test
+    void updateRuleName() throws Exception {
+        mockMvc.perform(post("/ruleName/update/1"))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void deleteRuleName() throws Exception {
+        mockMvc.perform(get("/ruleName/delete/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/home"));
+    }
+
+    /*
+     * TESTS BELOW FOR LOGGED-IN USERS
+     */
+
     @Test
     void whenValidInput_thenCreateRuleName() throws Exception {
         final int sizeOfList = repository.findAll().size();

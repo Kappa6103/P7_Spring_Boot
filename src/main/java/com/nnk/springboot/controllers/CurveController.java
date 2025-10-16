@@ -30,7 +30,7 @@ public class CurveController {
     }
 
     @GetMapping("/curvePoint/add")
-    public String addBidForm(Model model) {
+    public String addCurvePointForm(Model model) {
         model.addAttribute("curvePoint", new CurvePoint());
         return "curvePoint/add";
     }
@@ -59,7 +59,7 @@ public class CurveController {
     }
 
     @PostMapping("/curvePoint/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint,
+    public String updateCurvePoint(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint,
                              BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "curvePoint/update";
@@ -70,7 +70,7 @@ public class CurveController {
     }
 
     @GetMapping("/curvePoint/delete/{id}")
-    public String deleteBid(@PathVariable("id") Integer id, Model model) {
+    public String deleteCurvePoint(@PathVariable("id") Integer id, Model model) {
         if (curveService.existsById(id)) {
             curveService.deleteById(id);
         } else {

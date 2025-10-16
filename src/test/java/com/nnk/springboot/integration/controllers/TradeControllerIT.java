@@ -68,6 +68,55 @@ public class TradeControllerIT {
         }
     }
 
+    /*
+     * TESTS BELOW FOR NOT LOGGED-IN USERS
+     * SPRING SECURITY SHOULD REDIRECT TO HOME PAGE FOR LOGIN
+     */
+
+    @Test
+    void home() throws Exception {
+        mockMvc.perform(get("/trade/list"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/home"));
+    }
+
+    @Test
+    void addTradeForm() throws Exception {
+        mockMvc.perform(get("/trade/add"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/home"));
+    }
+
+    @Test
+    void validate() throws Exception {
+        mockMvc.perform(post("/trade/validate"))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void showUpdateForm() throws Exception {
+        mockMvc.perform(get("/trade/update/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/home"));
+    }
+
+    @Test
+    void updateTrade() throws Exception {
+        mockMvc.perform(post("/trade/update/1"))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void deleteTrade() throws Exception {
+        mockMvc.perform(get("/trade/delete/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/home"));
+    }
+
+    /*
+     * TESTS BELOW FOR LOGGED-IN USERS
+     */
+
     @Test
     void whenValidInput_thenCreateTrade() throws Exception {
         final int sizeOfList = repository.findAll().size();

@@ -71,6 +71,55 @@ public class CurveControllerIT {
         }
     }
 
+    /*
+     * TESTS BELOW FOR NOT LOGGED-IN USERS
+     * SPRING SECURITY SHOULD REDIRECT TO HOME PAGE FOR LOGIN
+     */
+
+    @Test
+    void home() throws Exception {
+        mockMvc.perform(get("/curvePoint/list"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/home"));
+    }
+
+    @Test
+    void addCurvePointForm() throws Exception {
+        mockMvc.perform(get("/curvePoint/add"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/home"));
+    }
+
+    @Test
+    void validate() throws Exception {
+        mockMvc.perform(post("/curvePoint/validate"))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void showUpdateForm() throws Exception {
+        mockMvc.perform(get("/curvePoint/update/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/home"));
+    }
+
+    @Test
+    void updateCurvePoint() throws Exception {
+        mockMvc.perform(post("/curvePoint/update/1"))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void deleteCurvePoint() throws Exception {
+        mockMvc.perform(get("/curvePoint/delete/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/home"));
+    }
+
+    /*
+     * TESTS BELOW FOR LOGGED-IN USERS
+     */
+
     @Test
     void whenValidInput_thenCreateCurvePoint() throws Exception {
         final int sizeOfList = repository.findAll().size();
