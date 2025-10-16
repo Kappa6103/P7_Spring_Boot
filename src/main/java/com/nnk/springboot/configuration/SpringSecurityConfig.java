@@ -11,6 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Configuration class for setting up Spring Security.
+ * It defines the security filter chain, authentication provider, and other security-related configurations.
+ */
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
@@ -20,7 +24,8 @@ public class SpringSecurityConfig {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -42,11 +47,25 @@ public class SpringSecurityConfig {
                 .logout(config -> config
                         .logoutSuccessUrl("/login?logout")
                 )
+                .exceptionHandling(config -> config
+                        .authenticationEntryPoint((request, response, authException) ->
+                                response.sendRedirect("/home"))
+                )
                 .csrf(Customizer.withDefaults()
                 )
                 .build();
     }
 
+    /**
+     * Creates and configures a DaoAuthenticationProvider bean.
+     * This authentication provider is responsible for handling authentication
+     * using a custom UserDetailsService and password encoder. It integrates
+     * with the UserService for retrieving user details and with the PasswordEncoder
+     * to encode and validate passwords securely.
+     *
+     * @return an instance of {@link DaoAuthenticationProvider} configured with
+     * the custom user service and password encoder.
+     */
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider(userService);
