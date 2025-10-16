@@ -15,6 +15,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -106,6 +108,8 @@ public class BidListControllerIT {
         final int sizeOfList = bidListRepository.findAll().size();
 
         mockMvc.perform(post("/bidList/validate")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("account", Const.ACCOUNT)
                         .param("type", Const.TYPE)
                         .param("bidQuantity", String.valueOf(Const.BID_QUANTITY)))
@@ -127,6 +131,8 @@ public class BidListControllerIT {
     @Test
     void whenInvalidInput_thenShowErrors() throws Exception {
         mockMvc.perform(post("/bidList/validate")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("account", Const.EMPTY_FIELD)
                         .param("type", Const.TYPE)
                         .param("bidQuantity", String.valueOf(Const.BID_QUANTITY)))
@@ -139,7 +145,8 @@ public class BidListControllerIT {
     void homeWithBidLists_shouldReturnPopulatedList() throws Exception {
         populateDBWithBidList(100);
 
-        MvcResult result = mockMvc.perform(get("/bidList/list"))
+        MvcResult result = mockMvc.perform(get("/bidList/list").with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bidList/list"))
                 .andExpect(model().attributeExists("bidLists"))
@@ -150,7 +157,9 @@ public class BidListControllerIT {
 
     @Test
     void homeWithoutBidLists_shouldReturnEmptyList() throws Exception {
-        MvcResult result = mockMvc.perform(get("/bidList/list"))
+        MvcResult result = mockMvc.perform(get("/bidList/list")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bidList/list"))
                 .andExpect(model().attributeExists("bidLists"))
@@ -161,7 +170,9 @@ public class BidListControllerIT {
 
     @Test
     void addBidListGetMapping() throws Exception {
-        mockMvc.perform(get("/bidList/add"))
+        mockMvc.perform(get("/bidList/add")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bidList/add"))
                 .andExpect(model().attributeExists("bidList"));
@@ -171,7 +182,9 @@ public class BidListControllerIT {
     void showUpdateForm_valid_id() throws Exception {
         populateDBWithBidList(1);
         int id = getFirstValidId();
-        mockMvc.perform(get("/bidList/update/" + id))
+        mockMvc.perform(get("/bidList/update/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bidList/update"))
                 .andExpect(model().attributeExists("bidList"));
@@ -183,7 +196,9 @@ public class BidListControllerIT {
         int nonExistentId = -1;
 
         Exception exception = assertThrows(ServletException.class,() -> {
-            mockMvc.perform(get("/bidList/update/" + nonExistentId));
+            mockMvc.perform(get("/bidList/update/" + nonExistentId)
+                    .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                    .with(csrf()));
         });
 
         String expectedMessage = "Invalid bidList Id: " + nonExistentId;
@@ -198,6 +213,8 @@ public class BidListControllerIT {
         int id = getFirstValidId();
 
         mockMvc.perform(post("/bidList/update/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("account", Const.ACCOUNT_UPDATED)
                         .param("type", Const.TYPE)
                         .param("bidQuantity", String.valueOf(Const.BID_QUANTITY)))
@@ -215,6 +232,8 @@ public class BidListControllerIT {
         int id = getFirstValidId();
 
         mockMvc.perform(post("/bidList/update/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("account", Const.EMPTY_FIELD)
                         .param("type", Const.TYPE)
                         .param("bidQuantity", String.valueOf(Const.BID_QUANTITY)))
@@ -232,7 +251,9 @@ public class BidListControllerIT {
         populateDBWithBidList(10);
         int id = getFirstValidId();
 
-        mockMvc.perform(get("/bidList/delete/" + id))
+        mockMvc.perform(get("/bidList/delete/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/bidList/list"));
 
@@ -246,7 +267,9 @@ public class BidListControllerIT {
         int nonExistentId = -1;
 
         Exception exception = assertThrows(ServletException.class,() -> { //TODO:  A Revoir
-            mockMvc.perform(get("/bidList/delete/" + nonExistentId));
+            mockMvc.perform(get("/bidList/delete/" + nonExistentId)
+                    .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                    .with(csrf()));
         });
 
         String expectedMessage = "Invalid bidList Id: " + nonExistentId;
@@ -255,6 +278,5 @@ public class BidListControllerIT {
         assertTrue(actualMessage.contains(expectedMessage));
         assertTrue(bidListRepository.findAll().size() == 10);
     }
-
 
 }

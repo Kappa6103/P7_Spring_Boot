@@ -15,6 +15,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -74,6 +76,9 @@ public class CurveControllerIT {
         final int sizeOfList = repository.findAll().size();
 
         mockMvc.perform(post("/curvePoint/validate")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
+                        .param("curveId", String.valueOf(Const.CURVE_ID))
                         .param("term", String.valueOf(Const.TERM))
                         .param("value", String.valueOf(Const.VALUE)))
                 .andExpect(status().is3xxRedirection())
@@ -94,6 +99,9 @@ public class CurveControllerIT {
     @Test
     void whenInvalidInput_thenShowErrors() throws Exception {
         mockMvc.perform(post("/curvePoint/validate")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
+                        .param("curveId", String.valueOf(Const.CURVE_ID))
                         .param("term", Const.EMPTY_FIELD)
                         .param("value", String.valueOf(Const.VALUE)))
                 .andExpect(status().isOk())
@@ -105,7 +113,9 @@ public class CurveControllerIT {
     void homeWithCurvePoints_shouldReturnPopulatedList() throws Exception {
         populateDBWithCurvePoints(100);
 
-        MvcResult result = mockMvc.perform(get("/curvePoint/list"))
+        MvcResult result = mockMvc.perform(get("/curvePoint/list")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("curvePoint/list"))
                 .andExpect(model().attributeExists("curvePoints"))
@@ -116,7 +126,9 @@ public class CurveControllerIT {
 
     @Test
     void homeWithoutCurvePoints_shouldReturnEmptyList() throws Exception {
-        MvcResult result = mockMvc.perform(get("/curvePoint/list"))
+        MvcResult result = mockMvc.perform(get("/curvePoint/list")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("curvePoint/list"))
                 .andExpect(model().attributeExists("curvePoints"))
@@ -127,7 +139,9 @@ public class CurveControllerIT {
 
     @Test
     void addCurvePointGetMapping() throws Exception {
-        mockMvc.perform(get("/curvePoint/add"))
+        mockMvc.perform(get("/curvePoint/add")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("curvePoint/add"))
                 .andExpect(model().attributeExists("curvePoint"));
@@ -137,7 +151,9 @@ public class CurveControllerIT {
     void showUpdateForm_valid_id() throws Exception {
         populateDBWithCurvePoints(1);
         int id = getFirstValidId();
-        mockMvc.perform(get("/curvePoint/update/" + id))
+        mockMvc.perform(get("/curvePoint/update/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("curvePoint/update"))
                 .andExpect(model().attributeExists("curvePoint"));
@@ -149,7 +165,9 @@ public class CurveControllerIT {
         int nonExistentId = -1;
 
         Exception exception = assertThrows(ServletException.class,() -> {
-            mockMvc.perform(get("/curvePoint/update/" + nonExistentId));
+            mockMvc.perform(get("/curvePoint/update/" + nonExistentId)
+                    .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                    .with(csrf()));
         });
 
         String expectedMessage = "Invalid curvePoint Id: " + nonExistentId;
@@ -164,6 +182,9 @@ public class CurveControllerIT {
         int id = getFirstValidId();
 
         mockMvc.perform(post("/curvePoint/update/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
+                        .param("curveId", String.valueOf(Const.CURVE_ID))
                         .param("term", String.valueOf(Const.TERM_UPDATED))
                         .param("value", String.valueOf(Const.VALUE)))
                 .andExpect(status().is3xxRedirection())
@@ -180,8 +201,11 @@ public class CurveControllerIT {
         int id = getFirstValidId();
 
         mockMvc.perform(post("/curvePoint/update/" + id)
+                        .param("curveId", String.valueOf(Const.CURVE_ID))
                         .param("term", Const.EMPTY_FIELD)
-                        .param("value", String.valueOf(Const.VALUE)))
+                        .param("value", String.valueOf(Const.VALUE))
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("curvePoint/update"))
                 .andExpect(model().hasErrors());
@@ -196,7 +220,9 @@ public class CurveControllerIT {
         populateDBWithCurvePoints(10);
         int id = getFirstValidId();
 
-        mockMvc.perform(get("/curvePoint/delete/" + id))
+        mockMvc.perform(get("/curvePoint/delete/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/curvePoint/list"));
 
@@ -210,7 +236,9 @@ public class CurveControllerIT {
         int nonExistentId = -1;
 
         Exception exception = assertThrows(ServletException.class,() -> { //TODO:  A Revoir
-            mockMvc.perform(get("/curvePoint/delete/" + nonExistentId));
+            mockMvc.perform(get("/curvePoint/delete/" + nonExistentId)
+                    .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                    .with(csrf()));
         });
 
         String expectedMessage = "Invalid curvePoint Id: " + nonExistentId;

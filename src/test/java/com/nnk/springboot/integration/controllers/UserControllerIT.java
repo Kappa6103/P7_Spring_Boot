@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -80,6 +82,8 @@ public class UserControllerIT {
         final int sizeOfList = userRepository.findAll().size();
 
         mockMvc.perform(post("/user/validate")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("username", Const.USERNAME)
                         .param("password", Const.PWD)
                         .param("fullname", Const.FULLNAME)
@@ -99,12 +103,14 @@ public class UserControllerIT {
         assertNotNull(user.getPassword());
         assertNotNull(user.getId());
         assertEquals(Const.PWD_HASHED_SIZE, user.getPassword().length());
-        assertFalse("password123".equals(user.getPassword())); //TODO : SHOULD BE THE CONST.PWD
+        assertFalse(Const.PWD.equals(user.getPassword()));
     }
 
     @Test
     void whenInvalidInput_thenShowErrors() throws Exception {
         mockMvc.perform(post("/user/validate")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("username", Const.EMPTY_FIELD)
                         .param("password", Const.PWD)
                         .param("fullname", Const.FULLNAME)
@@ -118,7 +124,9 @@ public class UserControllerIT {
     void homeWithUsers_shouldReturnPopulatedList() throws Exception {
         populateDBWithUsers(100);
 
-        MvcResult result = mockMvc.perform(get("/user/list"))
+        MvcResult result = mockMvc.perform(get("/user/list")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/list"))
                 .andExpect(model().attributeExists("users"))
@@ -129,7 +137,9 @@ public class UserControllerIT {
 
     @Test
     void homeWithoutUsers_shouldReturnEmptyList() throws Exception {
-        MvcResult result = mockMvc.perform(get("/user/list"))
+        MvcResult result = mockMvc.perform(get("/user/list")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/list"))
                 .andExpect(model().attributeExists("users"))
@@ -140,7 +150,9 @@ public class UserControllerIT {
 
     @Test
     void addUserGetMapping() throws Exception {
-        mockMvc.perform(get("/user/add"))
+        mockMvc.perform(get("/user/add")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/add"))
                 .andExpect(model().attributeExists("user"));
@@ -150,7 +162,9 @@ public class UserControllerIT {
     void showUpdateForm_valid_id() throws Exception {
         populateDBWithUsers(1);
         int userId = getFirstValidId();
-        mockMvc.perform(get("/user/update/" + userId))
+        mockMvc.perform(get("/user/update/" + userId)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/update"))
                 .andExpect(model().attributeExists("user"));
@@ -163,7 +177,9 @@ public class UserControllerIT {
         int nonExistentId = -1;
 
         Exception exception = assertThrows(ServletException.class,() -> {
-            mockMvc.perform(get("/user/update/" + nonExistentId));
+            mockMvc.perform(get("/user/update/" + nonExistentId)
+                    .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                    .with(csrf()));
         });
 
         String expectedMessage = "Invalid user Id: " + nonExistentId;
@@ -178,6 +194,8 @@ public class UserControllerIT {
         int userId = getFirstValidId();
 
         mockMvc.perform(post("/user/update/" + userId)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("username", Const.USERNAME_UPDATED)
                         .param("password", Const.PWD)
                         .param("fullname", Const.FULLNAME)
@@ -196,6 +214,8 @@ public class UserControllerIT {
         int userId = getFirstValidId();
 
         mockMvc.perform(post("/user/update/" + userId)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("username", Const.EMPTY_FIELD)
                         .param("password", Const.PWD)
                         .param("fullname", Const.FULLNAME)
@@ -214,7 +234,9 @@ public class UserControllerIT {
         populateDBWithUsers(10);
         int userId = getFirstValidId();
 
-        mockMvc.perform(get("/user/delete/" + userId))
+        mockMvc.perform(get("/user/delete/" + userId)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/user/list"));
 
@@ -228,7 +250,9 @@ public class UserControllerIT {
         int nonExistentId = -1;
 
         Exception exception = assertThrows(ServletException.class,() -> { //TODO:  A Revoir
-            mockMvc.perform(get("/user/delete/" + nonExistentId));
+            mockMvc.perform(get("/user/delete/" + nonExistentId)
+                    .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                    .with(csrf()));
         });
 
         String expectedMessage = "Invalid user Id: " + nonExistentId;
@@ -237,6 +261,5 @@ public class UserControllerIT {
         assertTrue(actualMessage.contains(expectedMessage));
         assertTrue(userRepository.findAll().size() == 10);
     }
-
 
 }

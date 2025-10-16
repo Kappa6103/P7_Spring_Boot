@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -71,6 +73,8 @@ public class RatingControllerIT {
         final int sizeOfList = repository.findAll().size();
 
         mockMvc.perform(post("/rating/validate")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("moodysRating", Const.MOODYS_RATING)
                         .param("sandPRating", Const.S_AND_P_RATING)
                         .param("fitchRating", Const.FITCH_RATING)
@@ -94,6 +98,8 @@ public class RatingControllerIT {
     @Test
     void whenInvalidInput_thenShowErrors() throws Exception {
         mockMvc.perform(post("/rating/validate")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("moodysRating", Const.EMPTY_FIELD)
                         .param("sandPRating", Const.S_AND_P_RATING)
                         .param("fitchRating", Const.FITCH_RATING)
@@ -107,7 +113,9 @@ public class RatingControllerIT {
     void homeWithRatings_shouldReturnPopulatedList() throws Exception {
         populateDBWithRatings(100);
 
-        MvcResult result = mockMvc.perform(get("/rating/list"))
+        MvcResult result = mockMvc.perform(get("/rating/list")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("rating/list"))
                 .andExpect(model().attributeExists("ratings"))
@@ -118,7 +126,9 @@ public class RatingControllerIT {
 
     @Test
     void homeWithoutRatings_shouldReturnEmptyList() throws Exception {
-        MvcResult result = mockMvc.perform(get("/rating/list"))
+        MvcResult result = mockMvc.perform(get("/rating/list")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("rating/list"))
                 .andExpect(model().attributeExists("ratings"))
@@ -129,7 +139,9 @@ public class RatingControllerIT {
 
     @Test
     void addRatingGetMapping() throws Exception {
-        mockMvc.perform(get("/rating/add"))
+        mockMvc.perform(get("/rating/add")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("rating/add"))
                 .andExpect(model().attributeExists("rating"));
@@ -139,7 +151,9 @@ public class RatingControllerIT {
     void showUpdateForm_valid_id() throws Exception {
         populateDBWithRatings(1);
         int id = getFirstValidId();
-        mockMvc.perform(get("/rating/update/" + id))
+        mockMvc.perform(get("/rating/update/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("rating/update"))
                 .andExpect(model().attributeExists("rating"));
@@ -152,7 +166,9 @@ public class RatingControllerIT {
         int nonExistentId = -1;
 
         Exception exception = assertThrows(ServletException.class,() -> {
-            mockMvc.perform(get("/rating/update/" + nonExistentId));
+            mockMvc.perform(get("/rating/update/" + nonExistentId)
+                    .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                    .with(csrf()));
         });
 
         String expectedMessage = "Invalid rating Id: " + nonExistentId;
@@ -167,6 +183,8 @@ public class RatingControllerIT {
         int id = getFirstValidId();
 
         mockMvc.perform(post("/rating/update/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("moodysRating", Const.MOODYS_RATING)
                         .param("sandPRating", Const.S_AND_P_RATING)
                         .param("fitchRating", Const.FITCH_RATING)
@@ -185,6 +203,8 @@ public class RatingControllerIT {
         int id = getFirstValidId();
 
         mockMvc.perform(post("/rating/update/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("moodysRating", Const.MOODYS_RATING)
                         .param("sandPRating", Const.S_AND_P_RATING)
                         .param("fitchRating", Const.FITCH_RATING)
@@ -203,7 +223,9 @@ public class RatingControllerIT {
         populateDBWithRatings(10);
         int id = getFirstValidId();
 
-        mockMvc.perform(get("/rating/delete/" + id))
+        mockMvc.perform(get("/rating/delete/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/rating/list"));
 
@@ -217,7 +239,9 @@ public class RatingControllerIT {
         int nonExistentId = -1;
 
         Exception exception = assertThrows(ServletException.class,() -> { //TODO:  A Revoir
-            mockMvc.perform(get("/rating/delete/" + nonExistentId));
+            mockMvc.perform(get("/rating/delete/" + nonExistentId)
+                    .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                    .with(csrf()));
         });
 
         String expectedMessage = "Invalid rating Id: " + nonExistentId;

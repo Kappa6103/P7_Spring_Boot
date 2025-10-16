@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -78,6 +80,8 @@ public class RuleNameControllerIT {
         final int sizeOfList = repository.findAll().size();
 
         mockMvc.perform(post("/ruleName/validate")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("name", Const.NAME)
                         .param("description", Const.DESCRIPTION)
                         .param("json", Const.JSON)
@@ -105,6 +109,8 @@ public class RuleNameControllerIT {
     @Test
     void whenInvalidInput_thenShowErrors() throws Exception {
         mockMvc.perform(post("/ruleName/validate")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("name", Const.EMPTY_FIELD)
                         .param("description", Const.DESCRIPTION)
                         .param("json", Const.JSON)
@@ -120,7 +126,9 @@ public class RuleNameControllerIT {
     void homeWithRuleNames_shouldReturnPopulatedList() throws Exception {
         populateDBWithRuleNames(100);
 
-        MvcResult result = mockMvc.perform(get("/ruleName/list"))
+        MvcResult result = mockMvc.perform(get("/ruleName/list")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("ruleName/list"))
                 .andExpect(model().attributeExists("ruleNames"))
@@ -131,7 +139,9 @@ public class RuleNameControllerIT {
 
     @Test
     void homeWithoutRuleNames_shouldReturnEmptyList() throws Exception {
-        MvcResult result = mockMvc.perform(get("/ruleName/list"))
+        MvcResult result = mockMvc.perform(get("/ruleName/list")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("ruleName/list"))
                 .andExpect(model().attributeExists("ruleNames"))
@@ -142,7 +152,9 @@ public class RuleNameControllerIT {
 
     @Test
     void addRuleNameGetMapping() throws Exception {
-        mockMvc.perform(get("/ruleName/add"))
+        mockMvc.perform(get("/ruleName/add")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("ruleName/add"))
                 .andExpect(model().attributeExists("ruleName"));
@@ -152,7 +164,9 @@ public class RuleNameControllerIT {
     void showUpdateForm_valid_id() throws Exception {
         populateDBWithRuleNames(1);
         int id = getFirstValidId();
-        mockMvc.perform(get("/ruleName/update/" + id))
+        mockMvc.perform(get("/ruleName/update/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("ruleName/update"))
                 .andExpect(model().attributeExists("ruleName"));
@@ -164,7 +178,9 @@ public class RuleNameControllerIT {
         int nonExistentId = -1;
 
         Exception exception = assertThrows(ServletException.class,() -> {
-            mockMvc.perform(get("/ruleName/update/" + nonExistentId));
+            mockMvc.perform(get("/ruleName/update/" + nonExistentId)
+                    .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                    .with(csrf()));
         });
 
         String expectedMessage = "Invalid ruleName Id: " + nonExistentId;
@@ -179,6 +195,8 @@ public class RuleNameControllerIT {
         int id = getFirstValidId();
 
         mockMvc.perform(post("/ruleName/update/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("name", Const.NAME_UPDATED)
                         .param("description", Const.DESCRIPTION)
                         .param("json", Const.JSON)
@@ -199,6 +217,8 @@ public class RuleNameControllerIT {
         int id = getFirstValidId();
 
         mockMvc.perform(post("/ruleName/update/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("name", Const.EMPTY_FIELD)
                         .param("description", Const.DESCRIPTION)
                         .param("json", Const.JSON)
@@ -219,7 +239,9 @@ public class RuleNameControllerIT {
         populateDBWithRuleNames(10);
         int id = getFirstValidId();
 
-        mockMvc.perform(get("/ruleName/delete/" + id))
+        mockMvc.perform(get("/ruleName/delete/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/ruleName/list"));
 
@@ -233,7 +255,9 @@ public class RuleNameControllerIT {
         int nonExistentId = -1;
 
         Exception exception = assertThrows(ServletException.class,() -> { //TODO:  A Revoir
-            mockMvc.perform(get("/ruleName/delete/" + nonExistentId));
+            mockMvc.perform(get("/ruleName/delete/" + nonExistentId)
+                    .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                    .with(csrf()));
         });
 
         String expectedMessage = "Invalid ruleName Id: " + nonExistentId;

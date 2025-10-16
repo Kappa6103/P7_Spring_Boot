@@ -1,5 +1,7 @@
 package com.nnk.springboot.constant;
 
+import com.nnk.springboot.models.config.Role;
+
 import java.time.LocalDateTime;
 
 public class Const {
@@ -20,11 +22,11 @@ public class Const {
     final public static String MOODYS_RATING = "Moodys Rating";
     final public static String S_AND_P_RATING = "S and P Rating";
     final public static String FITCH_RATING = "Fitch Rating";
-    final public static Byte ORDER_NUMBER = 10;
-    final public static Byte ORDER_NUMBER_UPDATED = 20;
+    final public static int ORDER_NUMBER = 10;
+    final public static int ORDER_NUMBER_UPDATED = 20;
 
-    final public static Byte CURVE_ID = 10;
-    final public static Byte CURVE_ID_UPDATED = 20;
+    final public static int CURVE_ID = 10;
+    final public static int CURVE_ID_UPDATED = 20;
     final public static Double TERM = 10d;
     final public static Double TERM_UPDATED = 323d;
     final public static Double VALUE = 30d;
@@ -33,7 +35,7 @@ public class Const {
 
     final public static String USERNAME = "TestUsername";
     final public static String USERNAME_UPDATED = "TestUsernameUpdated";
-    final public static String PWD = "TestPwd";
+    final public static String PWD = "TestPwdfafdsdfsfsd234@#$";
     final public static String FULLNAME = "Test Fullname";
     final public static String ROLE_USER = "USER";
     final public static String ROLE_ADMIN = "ADMIN";
@@ -61,5 +63,9 @@ public class Const {
     final public static LocalDateTime AS_OF_DATE = LocalDateTime.of(2025, 10, 6, 15, 25);
 
     final public static Double BUY_QUANTITY = 123d;
+
+    final public static String AUTH_USERNAME = "AUTH_USERNAM";
+    final public static String AUTH_PWD = "AUTH_PWD";
+    final public static String AUTH_ROLE_USER = Role.USER.toString();
 
 }

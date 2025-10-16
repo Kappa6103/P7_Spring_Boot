@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -71,6 +73,8 @@ public class TradeControllerIT {
         final int sizeOfList = repository.findAll().size();
 
         mockMvc.perform(post("/trade/validate")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("account", Const.ACCOUNT)
                         .param("type", Const.TYPE)
                         .param("buyQuantity", String.valueOf(Const.BUY_QUANTITY)))
@@ -92,6 +96,8 @@ public class TradeControllerIT {
     @Test
     void whenInvalidInput_thenShowErrors() throws Exception {
         mockMvc.perform(post("/trade/validate")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("account", Const.EMPTY_FIELD)
                         .param("type", Const.TYPE)
                         .param("buyQuantity", String.valueOf(Const.BUY_QUANTITY)))
@@ -104,7 +110,9 @@ public class TradeControllerIT {
     void homeWithTrades_shouldReturnPopulatedList() throws Exception {
         populateDBWithTrades(100);
 
-        MvcResult result = mockMvc.perform(get("/trade/list"))
+        MvcResult result = mockMvc.perform(get("/trade/list")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("trade/list"))
                 .andExpect(model().attributeExists("trades"))
@@ -115,10 +123,12 @@ public class TradeControllerIT {
 
     @Test
     void homeWithoutTrades_shouldReturnEmptyList() throws Exception {
-        MvcResult result = mockMvc.perform(get("/trade/list"))
+        MvcResult result = mockMvc.perform(get("/trade/list")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("trade/list"))
-                .andExpect(model().attributeExists("tradess"))
+                .andExpect(model().attributeExists("trades"))
                 .andReturn();
         List<Trade> tradeList = (List<Trade>) result.getModelAndView().getModel().get("trades");
         assertEquals(0, tradeList.size());
@@ -126,7 +136,9 @@ public class TradeControllerIT {
 
     @Test
     void addTradeGetMapping() throws Exception {
-        mockMvc.perform(get("/trade/add"))
+        mockMvc.perform(get("/trade/add")
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("trade/add"))
                 .andExpect(model().attributeExists("trade"));
@@ -136,7 +148,9 @@ public class TradeControllerIT {
     void showUpdateForm_valid_id() throws Exception {
         populateDBWithTrades(1);
         int id = getFirstValidId();
-        mockMvc.perform(get("/trade/update/" + id))
+        mockMvc.perform(get("/trade/update/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("trade/update"))
                 .andExpect(model().attributeExists("trade"));
@@ -148,7 +162,9 @@ public class TradeControllerIT {
         int nonExistentId = -1;
 
         Exception exception = assertThrows(ServletException.class,() -> {
-            mockMvc.perform(get("/trade/update/" + nonExistentId));
+            mockMvc.perform(get("/trade/update/" + nonExistentId)
+                    .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                    .with(csrf()));
         });
 
         String expectedMessage = "Invalid trade Id: " + nonExistentId;
@@ -163,6 +179,8 @@ public class TradeControllerIT {
         int id = getFirstValidId();
 
         mockMvc.perform(post("/trade/update/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("account", Const.ACCOUNT_UPDATED)
                         .param("type", Const.TYPE)
                         .param("buyQuantity", String.valueOf(Const.BUY_QUANTITY)))
@@ -180,6 +198,8 @@ public class TradeControllerIT {
         int id = getFirstValidId();
 
         mockMvc.perform(post("/trade/update/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf())
                         .param("account", Const.EMPTY_FIELD)
                         .param("type", Const.TYPE)
                         .param("bidQuantity", String.valueOf(Const.BID_QUANTITY)))
@@ -197,7 +217,9 @@ public class TradeControllerIT {
         populateDBWithTrades(10);
         int id = getFirstValidId();
 
-        mockMvc.perform(get("/trade/delete/" + id))
+        mockMvc.perform(get("/trade/delete/" + id)
+                        .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                        .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/trade/list"));
 
@@ -211,7 +233,9 @@ public class TradeControllerIT {
         int nonExistentId = -1;
 
         Exception exception = assertThrows(ServletException.class,() -> {
-            mockMvc.perform(get("/trade/delete/" + nonExistentId));
+            mockMvc.perform(get("/trade/delete/" + nonExistentId)
+                    .with(user(Const.AUTH_USERNAME).password(Const.AUTH_PWD).roles(Const.AUTH_ROLE_USER))
+                    .with(csrf()));
         });
 
         String expectedMessage = "Invalid trade Id: " + nonExistentId;
