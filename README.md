@@ -1,28 +1,135 @@
-# spring-boot
-## Technical:
+## 📚 Table of Contents
 
-1. Spring Boot 3.1.0
-2. Java 17
-3. Thymeleaf
-4. Bootstrap v.4.3.1
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Running the Application](#running-the-application)
+- [Project Structure](#project-structure)
+- [Pages](#pages)
+
+---
+
+## 🛠️ Technologies
+
+- Java 17+
+- Spring Boot
+- Spring Security
+- Spring Data JPA
+- Thymeleaf
+- MySQL
+- Maven
+- HTML/CSS
+- Bootstrap v.4.3.1
+
+---
+
+## 🚀 Installation
+
+1. **Clone the project**
+   ```bash
+   git clone https://github.com/Kappa6103/P7_Spring_Boot.git
+   cd P7_Spring_Boot
+   ```
+
+2**Build the project**
+   ```bash
+   mvn clean install
+   ```
+---
+
+## ▶️ Running the Application
+
+1. **Configure the MySQL DataBase**
+
+The connection to the Database can be with environment variables or you can add this lines to the application.properties file :
+```
+spring.datasource.username=your_username
+spring.datasource.password=your_pwd
+```
+
+2**Start the application**
+   ```bash
+   mvn spring-boot:run
+   ```
+
+3. **Access the application**
+```bash
+    URL: http://localhost:8080/home
+```
+---
 
 
-## Setup with Intellij IDE
-1. Create project from Initializr: File > New > project > Spring Initializr
-2. Add lib repository into pom.xml
-3. Add folders
-    - Source root: src/main/java
-    - View: src/main/resources
-    - Static: src/main/resource/static
-4. Create database with name "demo" as configuration in application.properties
-5. Run sql script to create table doc/data.sql
+## 📁 Project Structure (MVC)
+```
+src
+├── main
+│   └── java
+│   |   └── com.springboot
+│   |       ├── configuration
+│   |       ├── controllers
+│   |       ├── models
+│   |       │   └── config
+│   |       ├── repositories
+│   |       └── services
+│   |           └── interfaces            
+│   └── resources
+│        ├── DB_scripts
+│       ├── static
+│       │   └── css
+│       └── templates
+│           ├── bidList
+│           ├── curvePoint
+│           ├── rating
+│           ├── ruleName
+│           ├── trade
+│           └── user
+└── test
+    └── java
+        └── com.springboot
+            ├── constant
+            ├── integration
+            │    ├── controllers
+            │    └── repositories
+            └── services
+```
 
-## Implement a Feature
-1. Create mapping domain class and place in package com.nnk.springboot.models
-2. Create repository class and place in package com.nnk.springboot.repositories
-3. Create controller class and place in package com.nnk.springboot.controllers
+---
 
-## Security
-1. Create user service to load user from  database and place in package com.nnk.springboot.services
-2. Add configuration class and place in package com.nnk.springboot.config
+## 📱 Pages
 
+### 💼 Main Features
+ - CRUD operations on five entities : Bid List, Curve Points, Ratings, Trade and Rule
+ - Available there after authentication :
+```aiignore
+localhost:8080/bidList/list
+localhost:8080/curvePoint/list
+localhost:8080/ratingbidList/list
+localhost:8080/trade/list
+localhost:8080/ruleName/list
+
+```
+
+---
+
+## 🔐 Security Features
+
+- Password encryption
+- Session management
+- CSRF protection
+- Form validation
+
+---
+
+## 📫 Educational Context
+
+This project was developed as part of the OpenClassrooms Java Development course, focusing on:
+- Spring Boot application development
+- Database design and implementation
+- Security implementation
+- MVC architecture
+- Clean code principles
+
+---
+
+## 👤 Author
+
+[Kevin Schade] - OpenClassrooms Student
